@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec babel-node src/app.js",
-    "start": "nodemon --exec babel-node src/app.js",
+    "prestart": "babel src --out-dir dist",
+    "start": "babel-node ./dist/app.js",
     "build": "babel src --out-dir dist"
   },
   "dependencies": {
