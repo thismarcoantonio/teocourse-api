@@ -1,11 +1,9 @@
 import { connect, connection } from "mongoose"
+import dotenv from "dotenv"
+dotenv.config()
 
 function datasource() {
-  connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    user: process.env.DATABASE_USER,
-    pass: process.env.DATABASE_PASSWORD
-  })
+  connect(process.env.DATABASE_URL, { useNewUrlParser: true })
     .then(() => {
       console.info("Connected at port 27701")
     })
