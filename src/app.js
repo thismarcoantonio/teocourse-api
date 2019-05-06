@@ -6,6 +6,6 @@ dotenv.config()
 
 datasource()
   .once("open", async () => {
-    const { url } = await server.listen({ port: process.env.PORT || 3000 })
+    const { url } = await server.listen({ port: process.env.PORT || 3000, cors: false })
     console.info("🚀 Server ready at", url)
   })
