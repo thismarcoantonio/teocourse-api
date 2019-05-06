@@ -6,9 +6,10 @@ function datasource() {
     user: process.env.DATABASE_USER,
     pass: process.env.DATABASE_PASSWORD
   })
-  connection.once("open", () => {
-    console.info("Connected at port 27701")
-  })
+    .then(() => {
+      console.info("Connected at port 27701")
+    })
+    .catch(console.error)
 
   return connection
 }
