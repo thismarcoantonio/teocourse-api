@@ -26,7 +26,7 @@ export default gql`
   }
 
   type Mutation {
-    createClass(input: ClassInput!): Class!
-    deleteClass(id: ID!): Boolean!
+    createClass(input: ClassInput!): Class! @auth
+    deleteClass(id: ID!): Boolean! @auth
   }
 `

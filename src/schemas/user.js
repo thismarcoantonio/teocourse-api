@@ -20,6 +20,6 @@ export default gql`
 
   type Mutation {
     login(email: String!, password: String!): String!
-    createUser(input: CreateUserInput!): User!
+    createUser(input: CreateUserInput!): User! @auth
   }
 `

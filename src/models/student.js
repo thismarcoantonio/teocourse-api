@@ -62,7 +62,8 @@ const Student = new Schema({
   },
   class: {
     type: Types.ObjectId,
-    ref: "Class"
+    ref: "Class",
+    required: true
   },
   subjects: [{
     type: Types.ObjectId,

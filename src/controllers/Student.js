@@ -1,5 +1,6 @@
 import Model from "../models/student"
 import ClassModel from "../models/class"
+import { toDate } from "../utils/generateDate"
 
 class Student {
   retrieve(id) {
@@ -10,10 +11,14 @@ class Student {
     return Model.find()
   }
 
-  async create({ classCode, ...input }) {
+  async create({ classCode, baptizedDate, birthDate, ...input }) {
     const classroom = await ClassModel.findOne({ code: classCode })
-    const student = await Model.create({ ...input, class: classroom._id })
-    return student
+    return Model.create({
+      ...input,
+      baptizedDate: toDate(baptizedDate),
+      birthDate: toDate(birthDate),
+      class: classroom._id
+    })
   }
 }
 

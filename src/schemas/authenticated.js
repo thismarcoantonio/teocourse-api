@@ -1,4 +1,4 @@
-import { gql, SchemaDirectiveVisitor } from "apollo-server"
+import { gql, SchemaDirectiveVisitor, AuthenticationError } from "apollo-server"
 import { verify } from "jsonwebtoken"
 
 export default gql`
@@ -9,15 +9,22 @@ export class AuthenticatedDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const { resolve } = field
 
-    field.resolve = async function(root, input, context) {
-      const token = context.headers.authorization.replace("Bearer ", "")
+    field.resolve = async function(...args) {
+      const result = await resolve.apply(this, args)
+      const { authorization } = args[2].headers
+
+      if (!authorization) {
+        throw new AuthenticationError("User not authenticated")
+      }
+
+      const token = authorization.replace("Bearer ", "")
       const secret = process.env.JWT_SECRET
 
       return verify(token, secret, (err, decoded) => {
-        if (err) {
-          throw new Error(err)
-        }
+        if (err) throw new AuthenticationError(err)
         resolve(decoded)
+
+        return result
       })
     }
   }
